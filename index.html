@@ -3,100 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>War Thunder</title>
+    <title>Pokedex</title>
     <style>
         body {
+            margin: 0;
+        } 
+        .output {
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+        }
+        .poke-card {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: white;
-            color: #000;
-            font-family: sans-serif;
-            overflow: hidden;
+            border: 2px solid black;
+            width: 200px;
+            text-transform: capitalize;
         }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            max-width: 80%;
-        }
-
-        .btn-container {
+        .poke-types {
             display: flex;
-            gap: 2rem;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            min-height: 100px;
-            width: 100%;
-        }
-
-        button {
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.1s ease, background-color 0.2s;
-        }
-
-        #yesBtn {
-            background-color: rgb(0, 203, 0);
-            color: white;
-        }
-
-        #noBtn {
-            background-color: red;
-            color: white;
-        }
-
-        .teleporting {
-            position: fixed !important;
-            transition: top 0.1s ease, left 0.1s ease;
-            z-index: 999;
+            padding: 5px;
+            width: 60%;
         }
     </style>
 </head>
 <body>
-
-    <h1 id="question">is kayden better than zayden at war thunder</h1>
-    
-    <div class="btn-container">
-        <button id="yesBtn">Yes</button>
-        <button id="noBtn">No</button>
-    </div>
-
-    <script>
-        const yesButton = document.getElementById('yesBtn');
-        const noButton = document.getElementById('noBtn');
-        const questionText = document.getElementById('question');
-
-        function teleportButton() {
-            noButton.classList.add('teleporting');
-
-            const padding = 20;
-            const maxX = window.innerWidth - noButton.offsetWidth - padding;
-            const maxY = window.innerHeight - noButton.offsetHeight - padding;
-
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
-
-            noButton.style.left = randomX + 'px';
-            noButton.style.top = randomY + 'px';
-        }
-
-        noButton.addEventListener('click', teleportButton);
-
-        yesButton.addEventListener('click', () => {
-            questionText.innerText = "i knew you thought so!";
-            
-            noButton.style.display = 'none'; 
-            yesButton.style.visibility = 'hidden'; 
-        });
-    </script>
+    <section class="output"></section>
 </body>
+<script>
+    let arr = []
+
+    const init = () => {
+        fetchAllPokemon()
+    }
+
+    const fetchAllPokemon = async () => {
+        let res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0')
+        let data = await res.json()
+        console.log(data)
+        fetchEachPokemon(data.results)
+    }
+
+    const fetchSinglePokemon = async (pokemon) => {
+        let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+        let data = await res.json()
+        return await data
+    }
+
+    const fetchEachPokemon = async (pokemon) => {
+        const promises = pokemon.map(p => fetchSinglePokemon(p.name));
+        arr = await Promise.all(promises);
+        console.log(arr);
+        showPokemon(arr);
+    }
+
+    const showPokemon = (pokemon) => {
+        const output = document.querySelector('.output')
+        const map = pokemon.map(each => {
+            return `
+                <div class="poke-card">
+                    <h1>${each.name}</h1>
+                    <img src="${each.sprites.front_default}" alt="${each.name}"/>
+                    <div class="poke-types">
+                        <span>${each.types[0].type.name}</span>
+                        <span>${each.types.length > 1 ? each.types[1].type.name : ''}</span>
+                    </div>
+                </div>
+            `
+        }).join('')
+        return output.innerHTML = map
+    }
+
+    init()
+</script>
 </html>
