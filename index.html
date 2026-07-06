@@ -5,33 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
     <style>
-        body {
-            margin: 0;
-        } 
-        .output {
-            width: 100%;
+        body { 
+            margin: 0; 
+            font-family: 'Trebuchet MS';
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .output { 
+            width: 100%; 
+            padding: 10px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 5px; 
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .poke-card { 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            border: 2px solid #444444 !important; 
+            background-color: #2a2a2a;
+            width: 200px; 
+            text-transform: capitalize; 
             padding: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            justify-content: center;
-            align-items: center;
+            box-sizing: border-box;
         }
-        .poke-card {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid black;
-            width: 200px;
-            text-transform: capitalize;
+
+        .poke-card h1 {
+            font-size: 1.2rem;
+            word-break: break-word;
+            text-align: center;
+            margin: 5px 0;
+            width: 100%;
         }
-        .poke-types {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 5px;
-            width: 60%;
+
+        .poke-types { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 5px; 
+            width: 80%; 
         }
     </style>
 </head>
@@ -40,13 +57,13 @@
 </body>
 <script>
     let arr = []
-
+    
     const init = () => {
         fetchAllPokemon()
     }
 
     const fetchAllPokemon = async () => {
-        let res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=200&offset=0')
+        let res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=600&offset=0')
         let data = await res.json()
         console.log(data)
         fetchEachPokemon(data.results)
@@ -65,16 +82,43 @@
         showPokemon(arr);
     }
 
+    const getTypeStyle = (type) => {
+        const cleanType = type.toLowerCase().trim();
+        if (cleanType === 'normal') return 'color: #A8A77A;';
+        if (cleanType === 'fire') return 'color: #EE8130;';
+        if (cleanType === 'water') return 'color: #6390F0;';
+        if (cleanType === 'electric') return 'color: #F7D02C;';
+        if (cleanType === 'grass') return 'color: #7AC74C;';
+        if (cleanType === 'ice') return 'color: #96D9D6;';
+        if (cleanType === 'fighting') return 'color: #C22E28;';
+        if (cleanType === 'poison') return 'color: #A33EA1;';
+        if (cleanType === 'ground') return 'color: #E2BF65;';
+        if (cleanType === 'flying') return 'color: #A98FF3;';
+        if (cleanType === 'psychic') return 'color: #F95587;';
+        if (cleanType === 'bug') return 'color: #A6B91A;';
+        if (cleanType === 'rock') return 'color: #B6A136;';
+        if (cleanType === 'ghost') return 'color: #735797;';
+        if (cleanType === 'dragon') return 'color: #6F35FC;';
+        if (cleanType === 'dark') return 'color: #705746;';
+        if (cleanType === 'steel') return 'color: #B7B7CE;';
+        if (cleanType === 'fairy') return 'color: #D685AD;';
+        return '';
+    }
+
     const showPokemon = (pokemon) => {
         const output = document.querySelector('.output')
         const map = pokemon.map(each => {
+            const type1 = each.types[0].type.name;
+            const type2 = each.types.length > 1 ? each.types[1].type.name : '';
+            const displayName = each.name.replace(/-/g, ' '); 
+
             return `
                 <div class="poke-card">
-                    <h1>${each.name}</h1>
+                    <h1>${displayName}</h1>
                     <img src="${each.sprites.front_default}" alt="${each.name}"/>
                     <div class="poke-types">
-                        <span>${each.types[0].type.name}</span>
-                        <span>${each.types.length > 1 ? each.types[1].type.name : ''}</span>
+                        <span style="${getTypeStyle(type1)}">${type1}</span>
+                        <span style="${getTypeStyle(type2)}">${type2}</span>
                     </div>
                 </div>
             `
