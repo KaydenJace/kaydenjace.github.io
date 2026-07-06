@@ -46,7 +46,7 @@
     }
 
     const fetchAllPokemon = async () => {
-        let res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=600&offset=0')
+        let res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=200&offset=0')
         let data = await res.json()
         console.log(data)
         fetchEachPokemon(data.results)
