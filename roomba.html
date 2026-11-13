@@ -2,138 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Form</title>
+  <title>Kayden's Roomba Service</title>
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f3f1ec; /* Warm, paper-like cream to cut down glare */
-      color: #3b424c; /* Soft charcoal text instead of harsh black */
+      font-family: sans-serif;
       display: flex;
+      color: black;
+      background-color: rgb(253, 253, 253);
       flex-direction: column;
       align-items: center;
       margin-top: 50px;
-      padding: 0 20px 60px;
-      line-height: 1.6;
     }
-
-    h1 {
-      color: #2c323b;
-      font-size: 24px;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-
     .question {
-      margin: 16px 0;
+      margin: 15px 0;
       text-align: center;
     }
-
     .text-wrap {
       position: relative;
       display: inline-block;
-      font-weight: 500;
     }
-
     .price-tag {
       position: absolute;
       left: 100%;
       margin-left: 10px;
-      font-weight: 600;
-      color: #3b6e8c; /* Muted slate blue */
+      font-weight: bold;
       white-space: nowrap;
     }
-
-    label {
-      margin: 0 6px;
-      cursor: pointer;
-    }
-
-    input[type="radio"] {
-      accent-color: #3b6e8c;
-      cursor: pointer;
-    }
-
     select {
-      margin-top: 6px;
-      padding: 5px 10px;
+      margin-top: 5px;
+      padding: 4px 8px;
       font-size: 14px;
-      color: #3b424c;
-      background-color: #faf9f6;
-      border: 1px solid #cfc9be;
-      border-radius: 5px;
-      cursor: pointer;
     }
-
     #receipt {
-      margin-top: 32px;
-      border-top: 2px solid #b8b2a6; /* Softer divider instead of stark black */
-      padding-top: 16px;
+      margin-top: 30px;
+      border-top: 2px solid #000;
+      padding-top: 15px;
       width: 280px;
     }
-
     #receipt h3 {
       margin-bottom: 4px;
-      color: #2c323b;
     }
-
     .link-hint {
       margin: 0 0 14px 0;
       font-size: 12px;
-      color: #6b7280;
+      color: #555;
     }
-
     ul {
       list-style: none;
       padding: 0;
     }
-
     li {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin: 8px 0;
     }
-
     .item-link {
-      color: #2c6496; /* Gentler link blue */
+      color: #0066c0;
       text-decoration: none;
     }
-
     .item-link:hover {
       text-decoration: underline;
     }
-
-    hr {
-      border: none;
-      border-top: 1px solid #d6d1c7;
-      margin: 12px 0;
-    }
-
     .screenshot-notice {
       margin-top: 16px;
       padding: 10px 12px;
       border-radius: 4px;
       font-size: 13px;
-      color: #525963;
+      color: #222;
       line-height: 1.4;
     }
-
     .reset-btn {
       margin-top: 16px;
       width: 100%;
       padding: 8px 12px;
-      background-color: #faf9f6;
-      border: 1px solid #cfc9be;
-      border-radius: 5px;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       font-size: 13px;
-      font-weight: 600;
-      color: #3b424c;
+      font-weight: bold;
+      color: #333;
       cursor: pointer;
     }
-
     .reset-btn:hover {
-      background-color: #e8e4dc;
+      background-color: #f0f0f0;
     }
   </style>
 </head>
@@ -147,35 +99,35 @@
     <label><input type="radio" name="q6" value="no" onchange="updateForm()" disabled> No</label>
   </div>
 
-  <div class="question" data-item="Camera" data-price="25.99" data-link="https://amazon.com">
+  <div class="question" data-item="Camera" data-price="25.99" data-link="https://amazon.com/Seeed-Studio-XIAO-ESP32-Sense/dp/B0C69FFVHH">
     <span class="text-wrap">Do you want a camera?<span class="price-tag"></span></span>
     <br>
     <label><input type="radio" name="q1" value="yes" onchange="updateForm()"> Yes</label>
     <label><input type="radio" name="q1" value="no" onchange="updateForm()"> No</label>
   </div>
 
-  <div class="question" data-item="Hammer" data-price="4.99" data-link="https://amazon.com">
+  <div class="question" data-item="Hammer" data-price="4.99" data-link="https://amazon.com/Control-Raspberry-Helicopter-Airplane-Controls/dp/B0DFKPVRC2">
     <span class="text-wrap">Do you want a hammer?<span class="price-tag"></span></span>
     <br>
     <label><input type="radio" name="q2" value="yes" onchange="updateForm()"> Yes</label>
     <label><input type="radio" name="q2" value="no" onchange="updateForm()"> No</label>
   </div>
 
-  <div class="question" data-item="Horn" data-price="0" data-link="https://amazon.com">
+  <div class="question" data-item="Horn" data-price="0" data-link="https://amazon.com/KY-012-Active-Buzzer-Sensor-Module/dp/B0H389MY25">
     <span class="text-wrap">Do you want a horn?<span class="price-tag"></span></span>
     <br>
     <label><input type="radio" name="q3" value="yes" onchange="updateForm()"> Yes</label>
     <label><input type="radio" name="q3" value="no" onchange="updateForm()"> No</label>
   </div>
 
-  <div class="question" data-item="Vacuum Ability" data-price="6.98" data-link="https://amazon.com">
+  <div class="question" data-item="Vacuum Ability" data-price="6.98" data-link="https://amazon.com/BOJACK-H-Bridge-Controller-Intelligent-Mega2560/dp/B0C5JCF5RS">
     <span class="text-wrap">Do you want to the ability to vacuum?<span class="price-tag"></span></span>
     <br>
     <label><input type="radio" name="q4" value="yes" onchange="updateForm()"> Yes</label>
     <label><input type="radio" name="q4" value="no" onchange="updateForm()"> No</label>
   </div>
 
-  <div class="question" data-item="Battery" data-price="32.99" data-no-price="0" data-link="https://amazon.com" data-no-link="">
+  <div class="question" data-item="Battery" data-price="32.99" data-no-price="0" data-link="https://amazon.com/5800mAh-Lithium-Battery-Charger-Rechargeable/dp/B0DZM52TB5/" data-no-link="">
     <span class="text-wrap">Rechargable lithium battery or AA batteries for power?<span class="price-tag"></span></span>
     <br>
     <label><input type="radio" name="q5" value="yes" onchange="updateForm()"> Rechargable</label>
