@@ -113,7 +113,7 @@
     <label><input type="radio" name="q2" value="no" onchange="updateForm()"> No</label>
   </div>
 
-  <div class="question" data-item="Horn" data-price="0" data-link="https://amazon.com/KY-012-Active-Buzzer-Sensor-Module/dp/B0H389MY25">
+  <div class="question" data-item="Horn" data-price="5.99" data-link="https://www.amazon.com/Buzzer-Module-Arduino-ESP8266-Raspberry/dp/B0DYDJMP16">
     <span class="text-wrap">Do you want a horn?<span class="price-tag"></span></span>
     <br>
     <label><input type="radio" name="q3" value="yes" onchange="updateForm()"> Yes</label>
@@ -127,7 +127,7 @@
     <label><input type="radio" name="q4" value="no" onchange="updateForm()"> No</label>
   </div>
 
-  <div class="question" data-item="Battery" data-price="32.99" data-no-price="0" data-link="https://amazon.com/5800mAh-Lithium-Battery-Charger-Rechargeable/dp/B0DZM52TB5/" data-no-link="">
+  <div class="question" data-item="Battery" data-price="32.99" data-no-price="6.49" data-link="https://amazon.com/5800mAh-Lithium-Battery-Charger-Rechargeable/dp/B0DZM52TB5/" data-no-link="https://www.amazon.com/AmazonBasics-Performance-Alkaline-Batteries-8-Pack/dp/B00O869KJE">
     <span class="text-wrap">Rechargable lithium battery or AA batteries for power?<span class="price-tag"></span></span>
     <br>
     <label><input type="radio" name="q5" value="yes" onchange="updateForm()"> Rechargable</label>
@@ -174,7 +174,7 @@
       const rcSelected = document.querySelector('input[name="q6"][value="yes"]').checked;
 
       questions.forEach(q => {
-        const item = q.dataset.item;
+        let item = q.dataset.item;
         const priceTag = q.querySelector('.price-tag');
         const selectEl = q.querySelector('select');
         const yesInput = q.querySelector('input[value="yes"]');
@@ -195,9 +195,16 @@
           if (item === 'Vacuum Ability' && rcSelected) {
             activePrice = 3.01;
           }
+          if (item === 'Battery') {
+            item = 'Rechargeable Battery';
+          }
         } else if (isNo && q.dataset.noPrice !== undefined) {
           activePrice = Number(q.dataset.noPrice);
           activeLink = q.dataset.noLink;
+          
+          if (item === 'Battery') {
+            item = 'AA Battery';
+          }
         }
 
         if (activePrice !== null) {
@@ -209,16 +216,14 @@
 
           total += activePrice;
           
-          if (!(item === 'Battery' && isNo)) {
-            const li = document.createElement('li');
-            
-            const itemDisplay = activeLink 
-              ? `<a href="${activeLink}" target="_blank" rel="noopener noreferrer" class="item-link">${item}</a>` 
-              : item;
+          const li = document.createElement('li');
+          
+          const itemDisplay = activeLink 
+            ? `<a href="${activeLink}" target="_blank" rel="noopener noreferrer" class="item-link">${item}</a>` 
+            : item;
 
-            li.innerHTML = `<span>${itemDisplay}</span> <span>$${activePrice.toFixed(2)}</span>`;
-            receiptList.appendChild(li);
-          }
+          li.innerHTML = `<span>${itemDisplay}</span> <span>$${activePrice.toFixed(2)}</span>`;
+          receiptList.appendChild(li);
         } else {
           priceTag.textContent = '';
         }
